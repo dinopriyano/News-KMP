@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="title">News</string>
+    <string name="updated_txt">Updated</string>
+    <string name="just_now_txt">just now</string>
+    <string name="published_by_txt">Published by</string>
+    <string name="follow_txt">Follow</string>
+    <plural name="template_minute_ago">
+        <item quantity="one">minute ago</item>
+        <item quantity="other">minutes ago</item>
+    </plural>
+    <plural name="template_hour_ago">
+        <item quantity="one">hour ago</item>
+        <item quantity="other">hours ago</item>
+    </plural>
+    <plural name="template_day_ago">
+        <item quantity="one">day ago</item>
+        <item quantity="other">days ago</item>
+    </plural>
+    <plural name="template_week_ago">
+        <item quantity="one">week ago</item>
+        <item quantity="other">weeks ago</item>
+    </plural>
+</resources>
