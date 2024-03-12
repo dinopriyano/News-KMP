@@ -50,8 +50,10 @@ kotlin {
     
     sourceSets {
         val desktopMain by getting
+        val wasmJsMain by getting
 
         commonMain.dependencies {
+            projects
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -63,7 +65,8 @@ kotlin {
             implementation(libs.bundles.koin)
             implementation(libs.bundles.networking)
             implementation(libs.kotlinx.datetime)
-            api(libs.image.loader)
+            api(libs.coil.compose)
+            api(libs.coil.ktor.network)
         }
 
         androidMain.dependencies {
@@ -79,6 +82,10 @@ kotlin {
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.cio)
+        }
+
+        wasmJsMain.dependencies {
+            implementation(libs.ktor.client.js)
         }
     }
 }
