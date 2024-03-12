@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -49,11 +50,7 @@ kotlin {
     
     sourceSets {
         val desktopMain by getting
-        
-        androidMain.dependencies {
-            implementation(libs.compose.ui.tooling.preview)
-            implementation(libs.androidx.activity.compose)
-        }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -61,9 +58,27 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+            implementation(libs.bundles.voyager.navigaton)
+            implementation(libs.bundles.koin)
+            implementation(libs.bundles.networking)
+            implementation(libs.kotlinx.datetime)
+            api(libs.image.loader)
         }
+
+        androidMain.dependencies {
+            implementation(libs.compose.ui.tooling.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.client.android)
+        }
+
+        appleMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.ktor.client.cio)
         }
     }
 }
