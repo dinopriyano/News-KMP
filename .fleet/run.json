@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        
+        {
+            "name": "composeApp [WasmJs]",
+            "type": "gradle",
+            "workingDir": "$PROJECT_DIR$",
+            "tasks": ["wasmJsBrowserDevelopmentRun"],
+            "args": ["-p", "$PROJECT_DIR$/composeApp"],
+            "initScripts": {
+                "flmapper": "ext.mapPath = { path -> null }"
+            }
+        }
+    ]
+}

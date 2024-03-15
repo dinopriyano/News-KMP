@@ -1,4 +1,4 @@
-package com.dino.newskmp.common.config
+package com.dino.newskmp.common.presentation.config
 
 /**
  * Created by dinopriyano on 12/03/24.

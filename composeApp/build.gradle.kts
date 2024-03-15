@@ -53,10 +53,9 @@ kotlin {
         val wasmJsMain by getting
 
         commonMain.dependencies {
-            projects
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -73,6 +72,7 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.android)
+            implementation(libs.koin.compose)
         }
 
         appleMain.dependencies {
@@ -82,6 +82,7 @@ kotlin {
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.cio)
+            implementation(libs.koin.compose)
         }
 
         wasmJsMain.dependencies {

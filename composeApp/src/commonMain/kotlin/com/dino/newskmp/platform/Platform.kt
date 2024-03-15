@@ -1,6 +1,6 @@
 package com.dino.newskmp.platform
 
-import com.dino.newskmp.common.config.Platform
+import com.dino.newskmp.common.presentation.config.Platform
 import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.core.module.Module
 

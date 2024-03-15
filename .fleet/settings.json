@@ -1,4 +1,5 @@
 {
     "autoSave": "AfterDelay",
-    "toolchains": []
+    "toolchains": [],
+    "backend.maxHeapSizeMb": 8000
 }
