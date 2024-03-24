@@ -1,4 +1,4 @@
-package com.dino.newskmp.feature.main.di
+package com.dino.newskmp.common.di
 
 import com.dino.newskmp.feature.bookmark.di.discoveryModule
 import com.dino.newskmp.feature.discovery.di.bookmarkModule

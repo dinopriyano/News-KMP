@@ -1,3 +1,4 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -7,6 +8,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.build.konfig)
 }
 
 kotlin {
@@ -90,6 +92,14 @@ kotlin {
         wasmJsMain.dependencies {
             implementation(libs.ktor.client.js)
         }
+    }
+}
+
+buildkonfig {
+    packageName = "com.dino.newskmp"
+
+    defaultConfigs {
+        buildConfigField(FieldSpec.Type.STRING, "API_KEY", properties["API_KEY"].toString())
     }
 }
 

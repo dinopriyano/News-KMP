@@ -1,7 +1,7 @@
 package com.dino.newskmp
 
 import android.app.Application
-import com.dino.newskmp.feature.main.di.initKoin
+import com.dino.newskmp.common.di.initKoin
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import org.koin.android.ext.koin.androidContext

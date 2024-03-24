@@ -6,7 +6,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import news_kmp.composeapp.generated.resources.*
 import news_kmp.composeapp.generated.resources.Res
 import news_kmp.composeapp.generated.resources.nexa_extra_light
 import news_kmp.composeapp.generated.resources.nexa_heavy

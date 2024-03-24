@@ -21,6 +21,7 @@ ktor = "3.0.0-wasm2"
 kotlin-datetime = "0.6.0-RC.2"
 coil-compose = "3.0.0-alpha06"
 napier = "2.7.1"
+build-konfig = "0.15.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -74,6 +75,7 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+build-konfig = { id = "com.codingfeline.buildkonfig", version.ref = "build-konfig" }
 
 [bundles]
 voyager-navigaton = ["voyager-navigator", "voyager-tab-navigator", "voyager-transitions", "voyager-screen-model"]

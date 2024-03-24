@@ -181,7 +181,6 @@ fun NewsSlider(
                         pagerState
                     ),
                 shape = RoundedCornerShape(28.dp),
-                elevation = CardDefaults.cardElevation(16.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = getCardColor(page)
                 )

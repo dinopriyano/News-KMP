@@ -13,4 +13,3 @@ val PurplePastel = Color(0xFFF2E0FF)
 val DarkTransparent = Color(0x26000000)
 val LightTransparent = Color(0x26FFFFFF)
 val IconPastel = Color(0xFF6E5604)
-
