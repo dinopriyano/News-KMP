@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -25,8 +24,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import io.github.aakira.napier.Napier
-import kotlin.math.abs
 import kotlin.math.absoluteValue
 
 /**
@@ -35,21 +32,12 @@ import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class) fun Modifier.carouselTransition(
     page: Int,
-    lazyListState: LazyListState
+    pagerState: PagerState
 ) = composed {
-
-    val halfRowWidth = lazyListState.layoutInfo.viewportSize.width / 2f
+    val isLastPage = page == pagerState.pageCount - 1
     val pageOffset =
-        lazyListState.layoutInfo.visibleItemsInfo
-            .firstOrNull { it.index == page }
-            ?.let { info ->
-                val centerPosition = info.offset + info.size / 2f
-                val offsetFromCenter = centerPosition - (lazyListState.layoutInfo.viewportStartOffset + halfRowWidth)
-                val normalizedOffset = offsetFromCenter / halfRowWidth
-                val clampedOffset = normalizedOffset.coerceIn(-1f, 1f) // Clamp value to -1 to 1
-                clampedOffset* 0.25f // Scale the offset if necessary
-            } ?: 0f
-    val absOffset = pageOffset.absoluteValue
+        ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction)
+    val absPageOffset = pageOffset.absoluteValue
 
     graphicsLayer {
 
@@ -57,18 +45,23 @@ import kotlin.math.absoluteValue
         scaleY = MathUtils.lerp(
             start = 0.9f,
             stop = 1f,
-            fraction = 1f - absOffset.coerceIn(0f, 1f)
+            fraction = 1f - absPageOffset.coerceIn(0f, 1f)
         )
 
         // Rotate item
         val maxRotationDegree = 10f
-        val rotationDegree = maxRotationDegree * 4 * (pageOffset)
+        val rotationDegree = if (isLastPage && pagerState.currentPage == pagerState.pageCount - 1) {
+            0f
+        } else {
+            maxRotationDegree * (if (pageOffset > 0) -1 else 1) * absPageOffset.coerceIn(0f, 1f)
+        }
         rotationZ = rotationDegree
 
         // Translation
-        translationX = pageOffset * size.width * 2f * -1f
+        translationX = pageOffset * (size.width * 0.8F)
+        translationY = (if (pageOffset > 0) 1 else -1) * (pageOffset * ((MathUtils.calculateRotatedHeight(size.width, size.height, rotationDegree) - size.height) / 2))
 
-    }.zIndex(1f - absOffset)
+    }.zIndex(1f - absPageOffset)
 }
 
 @Composable fun Modifier.drawCircleIndicator(
@@ -104,17 +97,17 @@ fun Modifier.animateScaled(enabled: Boolean = true): Modifier = composed {
     this.let {
         if(enabled) {
             this.scale(scale)
-        .pointerInput(selected) {
-            awaitPointerEventScope {
-                selected = if (selected) {
-                    waitForUpOrCancellation()
-                    false
-                } else {
-                    awaitFirstDown(false)
-                    true
+                .pointerInput(selected) {
+                    awaitPointerEventScope {
+                        selected = if (selected) {
+                            waitForUpOrCancellation()
+                            false
+                        } else {
+                            awaitFirstDown(false)
+                            true
+                        }
+                    }
                 }
-            }
-        }
         } else {
             this
         }
