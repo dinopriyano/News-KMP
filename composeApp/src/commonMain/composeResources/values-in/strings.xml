@@ -5,20 +5,14 @@
     <string name="just_now_txt">baru saja</string>
     <string name="published_by_txt">Diterbitkan oleh</string>
     <string name="follow_txt">Ikuti</string>
-    <plural name="template_minute_ago">
-        <item quantity="one">menit yang lalu</item>
-        <item quantity="other">menit yang lalu</item>
-    </plural>
-    <plural name="template_hour_ago">
-        <item quantity="one">jam yang lalu</item>
-        <item quantity="other">jam yang lalu</item>
-    </plural>
-    <plural name="template_day_ago">
-        <item quantity="one">hari yang lalu</item>
-        <item quantity="other">hari yang lalu</item>
-    </plural>
-    <plural name="template_week_ago">
-        <item quantity="one">minggu yang lalu</item>
-        <item quantity="other">minggu yang lalu</item>
-    </plural>
+
+    <!-- comopse resource doesn't yet support plural -->
+    <string name="x_minute_ago_one">%d menit yang lalu</string>
+    <string name="x_minute_ago_other">%d menit yang lalu</string>
+    <string name="x_hour_ago_one">%d jam yang lalu</string>
+    <string name="x_hour_ago_other">%d jam yang lalu</string>
+    <string name="x_day_ago_one">%d hari yang lalu</string>
+    <string name="x_day_ago_other">%d hari yang lalu</string>
+    <string name="x_week_ago_one">%d minggu yang lalu</string>
+    <string name="x_week_ago_other">%d minggu yang lalu</string>
 </resources>

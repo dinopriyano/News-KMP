@@ -8,46 +8,44 @@ import androidx.compose.ui.graphics.Color
 import com.dino.newskmp.utils.getDeviceOrientation
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.copy
+import kotlinx.cinterop.zeroValue
+import platform.CoreGraphics.CGRect
 import platform.CoreGraphics.CGRectMake
-import platform.UIKit.UIApplication
-import platform.UIKit.UIColor
-import platform.UIKit.UIView
-import platform.UIKit.UIWindow
+import platform.UIKit.*
 
 private fun Color.toUIColor(): UIColor = UIColor(
     red = this.red.toDouble(),
     green = this.green.toDouble(),
     blue = this.blue.toDouble(),
-    alpha = this.alpha.toDouble(),
-    )
+    alpha = this.alpha.toDouble()
+)
 
-@OptIn(ExperimentalForeignApi::class) @Composable
-actual fun SystemBarColor(statusBarColor: Color, navigationBarColor: Color) {
-    val safeFrameSize = remember { mutableStateOf(0.0) }
+@OptIn(ExperimentalForeignApi::class)
+@Composable
+private fun statusBarView() = remember {
+    val keyWindow: UIWindow? =
+        UIApplication.sharedApplication.windows.firstOrNull { (it as? UIWindow)?.isKeyWindow() == true } as? UIWindow
+    val tag =
+        3848245L // https://stackoverflow.com/questions/56651245/how-to-change-the-status-bar-background-color-and-text-color-on-ios-13
 
-    val window =
-        (UIApplication.sharedApplication.windows.first() as UIWindow)
-    // Getting safe area size
-    window.safeAreaLayoutGuide.layoutFrame.copy {
-        // Getting safe area size in case of landscape and portrait
-        if (getDeviceOrientation().portrait) {
-            safeFrameSize.value = origin.y
-        } else {
-            safeFrameSize.value = origin.x
-        }
+    keyWindow?.viewWithTag(tag)?.let {
+        it
+    } ?: run {
+        val height =
+            keyWindow?.windowScene?.statusBarManager?.statusBarFrame ?: zeroValue<CGRect>()
+        val statusBarView = UIView(frame = height)
+        statusBarView.tag = tag
+        statusBarView.layer.zPosition = 999999.0
+        keyWindow?.addSubview(statusBarView)
+        statusBarView
     }
+}
 
-    val statusBar = UIView(
-        frame = CGRectMake(
-            x = 0.0,
-            y = 0.0,
-            width = Double.MAX_VALUE,
-            height = safeFrameSize.value
-        )
-    )
-
-    statusBar.backgroundColor = statusBarColor.toUIColor()
+@Composable
+actual fun SystemBarColor(statusBarColor: Color, navigationBarColor: Color) {
+    val statusBar = statusBarView()
     SideEffect {
-        UIApplication.sharedApplication.keyWindow?.addSubview(statusBar)
+        statusBar?.backgroundColor = statusBarColor.toUIColor()
+        UINavigationBar.appearance().backgroundColor = navigationBarColor.toUIColor()
     }
 }

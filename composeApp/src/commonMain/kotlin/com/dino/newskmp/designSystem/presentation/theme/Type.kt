@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
+import news_kmp.composeapp.generated.resources.*
 import news_kmp.composeapp.generated.resources.Res
 import news_kmp.composeapp.generated.resources.nexa_extra_light
 import news_kmp.composeapp.generated.resources.nexa_heavy
@@ -38,73 +38,41 @@ fun getTypography(): Typography {
             fontFamily = outfitFontFamily,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
-            lineHeightStyle = LineHeightStyle(
-                alignment = LineHeightStyle.Alignment.Center,
-                trim = LineHeightStyle.Trim.None
-            ),
         ),
         bodyLarge = TextStyle(
             fontFamily = outfitFontFamily,
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp,
-            lineHeightStyle = LineHeightStyle(
-                alignment = LineHeightStyle.Alignment.Center,
-                trim = LineHeightStyle.Trim.None
-            )
         ),
         labelSmall = TextStyle(
             fontFamily = outfitFontFamily,
             fontWeight = FontWeight.Medium,
             fontSize = 14.sp,
-            lineHeightStyle = LineHeightStyle(
-                alignment = LineHeightStyle.Alignment.Center,
-                trim = LineHeightStyle.Trim.None
-            )
         ),
         labelMedium = TextStyle(
             fontFamily = outfitFontFamily,
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp,
-            lineHeightStyle = LineHeightStyle(
-                alignment = LineHeightStyle.Alignment.Center,
-                trim = LineHeightStyle.Trim.None
-            )
         ),
         labelLarge = TextStyle(
             fontFamily = outfitFontFamily,
             fontWeight = FontWeight.Medium,
             fontSize = 24.sp,
-            lineHeightStyle = LineHeightStyle(
-                alignment = LineHeightStyle.Alignment.Center,
-                trim = LineHeightStyle.Trim.None
-            )
         ),
         titleSmall = TextStyle(
             fontFamily = nexaFontFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
-            lineHeightStyle = LineHeightStyle(
-                alignment = LineHeightStyle.Alignment.Center,
-                trim = LineHeightStyle.Trim.None
-            )
         ),
         titleMedium = TextStyle(
             fontFamily = nexaFontFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp,
-            lineHeightStyle = LineHeightStyle(
-                alignment = LineHeightStyle.Alignment.Center,
-                trim = LineHeightStyle.Trim.None
-            )
         ),
         titleLarge = TextStyle(
             fontFamily = nexaFontFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 26.sp,
-            lineHeightStyle = LineHeightStyle(
-                alignment = LineHeightStyle.Alignment.Center,
-                trim = LineHeightStyle.Trim.None
-            )
         )
     )
 }

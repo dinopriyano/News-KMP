@@ -1,5 +1,6 @@
 {
     "autoSave": "AfterDelay",
     "toolchains": [],
-    "backend.maxHeapSizeMb": 8000
+    "backend.maxHeapSizeMb": 8000,
+    "run.destination.stop.already.running": "Always"
 }

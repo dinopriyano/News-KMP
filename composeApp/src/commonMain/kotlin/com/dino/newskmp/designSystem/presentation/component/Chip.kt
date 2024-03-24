@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.dino.newskmp.common.utils.noRippleClickable
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 /**
@@ -30,7 +31,7 @@ fun RawrChip(
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.labelLarge,
+        style = MaterialTheme.typography.labelMedium,
         color = textColor,
         modifier = modifier.clip(RoundedCornerShape(50))
             .then(
@@ -47,7 +48,7 @@ fun RawrChip(
                 }
             )
             .padding(horizontal = 12.dp, vertical = 4.dp)
-            .clickable { onClick(text) }
+            .noRippleClickable { onClick(text) }
     )
 }
 

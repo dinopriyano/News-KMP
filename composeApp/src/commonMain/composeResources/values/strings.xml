@@ -5,20 +5,15 @@
     <string name="just_now_txt">just now</string>
     <string name="published_by_txt">Published by</string>
     <string name="follow_txt">Follow</string>
-    <plural name="template_minute_ago">
-        <item quantity="one">minute ago</item>
-        <item quantity="other">minutes ago</item>
-    </plural>
-    <plural name="template_hour_ago">
-        <item quantity="one">hour ago</item>
-        <item quantity="other">hours ago</item>
-    </plural>
-    <plural name="template_day_ago">
-        <item quantity="one">day ago</item>
-        <item quantity="other">days ago</item>
-    </plural>
-    <plural name="template_week_ago">
-        <item quantity="one">week ago</item>
-        <item quantity="other">weeks ago</item>
-    </plural>
+
+    <!-- comopse resource doesn't yet support plural -->
+    <string name="x_minute_ago_one">%d minute ago</string>
+    <string name="x_minute_ago_other">%d minutes ago</string>
+    <string name="x_hour_ago_one">%d hour ago</string>
+    <string name="x_hour_ago_other">%d hours ago</string>
+    <string name="x_day_ago_one">%d day ago</string>
+    <string name="x_day_ago_other">%d days ago</string>
+    <string name="x_week_ago_one">%d week ago</string>
+    <string name="x_week_ago_other">%d weeks ago</string>
+    
 </resources>

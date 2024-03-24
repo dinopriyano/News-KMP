@@ -7,6 +7,7 @@ struct iOSApp: App {
 
 	init() {
 		KoinKt.doInitKoin(baseUrl: "test")
+		NapierHelperKt.debugBuild()
 	}
 
 	var body: some Scene {

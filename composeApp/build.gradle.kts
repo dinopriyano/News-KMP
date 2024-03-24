@@ -64,11 +64,13 @@ kotlin {
             implementation(libs.bundles.koin)
             implementation(libs.bundles.networking)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.napier)
             api(libs.coil.compose)
             api(libs.coil.ktor.network)
         }
 
         androidMain.dependencies {
+            implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.android)
