@@ -4,11 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
+import com.dino.newskmp.common.presentation.config.Platform
 import com.dino.newskmp.designSystem.presentation.theme.BluePastel
 import com.dino.newskmp.designSystem.presentation.theme.PinkPastel
 import com.dino.newskmp.designSystem.presentation.theme.PurplePastel
 import com.dino.newskmp.designSystem.presentation.theme.YellowPastel
 import com.dino.newskmp.platform.DateTime
+import com.dino.newskmp.platform.currentPlatform
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import news_kmp.composeapp.generated.resources.Res
@@ -64,3 +66,5 @@ fun formatToTimeAgo(isoDate: String): String {
 
 @Composable
 fun Dp.toPx(): Float = with(LocalDensity.current) { toPx() }
+
+fun isLargeScreen() = (currentPlatform == Platform.WEB || currentPlatform == Platform.DESKTOP)

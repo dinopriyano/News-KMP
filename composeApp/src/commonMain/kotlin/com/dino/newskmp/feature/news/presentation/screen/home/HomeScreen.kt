@@ -7,17 +7,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -44,17 +47,15 @@ import com.dino.newskmp.common.presentation.base.BaseScreen
 import com.dino.newskmp.common.utils.animateScaled
 import com.dino.newskmp.common.utils.carouselTransition
 import com.dino.newskmp.common.utils.getCardColor
+import com.dino.newskmp.common.utils.isLargeScreen
 import com.dino.newskmp.common.utils.noRippleClickable
-import com.dino.newskmp.designSystem.presentation.component.NewsCard
+import com.dino.newskmp.designSystem.presentation.component.NewsShortcut
 import com.dino.newskmp.designSystem.presentation.component.RawrMultiSelectionChip
 import com.dino.newskmp.designSystem.presentation.component.RawrMultiSelectionColor
 import com.dino.newskmp.designSystem.presentation.theme.DarkTransparent
 import com.dino.newskmp.designSystem.presentation.theme.IconPastel
 import news_kmp.composeapp.generated.resources.Res
-import news_kmp.composeapp.generated.resources.ic_bookmark_outlined
 import news_kmp.composeapp.generated.resources.ic_kmp_news_light
-import news_kmp.composeapp.generated.resources.ic_like_outlined
-import news_kmp.composeapp.generated.resources.ic_share_outlined
 import news_kmp.composeapp.generated.resources.title
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -72,7 +73,7 @@ class HomeScreen : BaseScreen<HomeScreenModel, HomeScreenUiState, HomeScreenUiEf
     override fun onRender(state: HomeScreenUiState, listener: HomeScreenInteractionListener) {
         var selectedCategoryIndex by rememberSaveable { mutableStateOf(0) }
         val categories = listOf(
-            "Trending", "Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"
+            "Trending", "Business", "Entertainment", "Health", "Science", "Sports", "Technology"
         )
 
         Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
@@ -92,7 +93,9 @@ class HomeScreen : BaseScreen<HomeScreenModel, HomeScreenUiState, HomeScreenUiEf
             // Slider content
             NewsSlider(
                 newsList = state.news,
-                modifier = Modifier.fillMaxSize().padding(bottom = (56.dp + 5.dp + 24.dp))
+                modifier = Modifier.fillMaxSize(),
+                isShouldScrollToFirstItem = state.isShouldScrollToFirstItem,
+                onScrollToFirstItem = listener::onScrollTFirstItem
             )
         }
     }
@@ -160,11 +163,27 @@ fun NewsCategories(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalResourceApi::class)
 @Composable
 fun NewsSlider(
     newsList: List<News>,
-    modifier: Modifier
+    modifier: Modifier,
+    isShouldScrollToFirstItem: Boolean,
+    onScrollToFirstItem: () -> Unit
+) {
+    if (isLargeScreen()) {
+        LargeScreeSlider(newsList, isShouldScrollToFirstItem, modifier, onScrollToFirstItem)
+    } else {
+        SmallScreenSlider(newsList, isShouldScrollToFirstItem, modifier, onScrollToFirstItem)
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SmallScreenSlider(
+    newsList: List<News>,
+    isShouldScrollToFirstItem: Boolean,
+    modifier: Modifier,
+    onScrollToFirstItem: () -> Unit,
 ) {
     val pagerState = rememberPagerState(
         pageCount = {
@@ -172,8 +191,11 @@ fun NewsSlider(
         }
     )
 
-    LaunchedEffect(newsList) {
-        pagerState.animateScrollToPage(0)
+    LaunchedEffect(isShouldScrollToFirstItem) {
+        if (isShouldScrollToFirstItem){
+            pagerState.animateScrollToPage(0)
+            onScrollToFirstItem()
+        }
     }
 
     HorizontalPager(
@@ -183,7 +205,11 @@ fun NewsSlider(
     ) { page ->
         val currentNews = newsList.getOrNull(page)
         currentNews?.let { news ->
-            Card(
+            NewsShortcut(
+                news = news,
+                colors = CardDefaults.cardColors(
+                    containerColor = getCardColor(page)
+                ),
                 modifier = Modifier
                     .noRippleClickable {
 
@@ -191,46 +217,47 @@ fun NewsSlider(
                     .carouselTransition(
                         page,
                         pagerState
-                    ),
-                shape = RoundedCornerShape(28.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = getCardColor(page)
-                )
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.End
-                ) {
-                    NewsCard(
-                        news = news,
-                        modifier = Modifier.fillMaxWidth().weight(1f).padding(24.dp)
                     )
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        ActionImage(
-                            imageResource = Res.drawable.ic_like_outlined,
-                            modifier = Modifier
-                        ) {
+            )
+        }
+    }
+}
 
-                        }
-                        ActionImage(
-                            imageResource = Res.drawable.ic_bookmark_outlined,
-                            modifier = Modifier
-                        ) {
+@Composable
+fun LargeScreeSlider(
+    newsList: List<News>,
+    isShouldScrollToFirstItem: Boolean,
+    modifier: Modifier,
+    onScrollToFirstItem: () -> Unit,
+) {
+    val listState = rememberLazyListState()
 
-                        }
-                        ActionImage(
-                            imageResource = Res.drawable.ic_share_outlined,
-                            modifier = Modifier
-                        ) {
+    LaunchedEffect(isShouldScrollToFirstItem) {
+        if (isShouldScrollToFirstItem){
+            listState.animateScrollToItem(0)
+            onScrollToFirstItem()
+        }
+    }
 
-                        }
+    LazyRow (
+        modifier = modifier,
+        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        state = listState
+    ) {
+        itemsIndexed(newsList) { index, news ->
+            NewsShortcut(
+                news = news,
+                colors = CardDefaults.cardColors(
+                    containerColor = getCardColor(index)
+                ),
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .aspectRatio(3f/4f)
+                    .noRippleClickable {
+
                     }
-                }
-            }
+            )
         }
     }
 }

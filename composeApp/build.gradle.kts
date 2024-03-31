@@ -70,6 +70,7 @@ kotlin {
             implementation(libs.bundles.networking)
             implementation(libs.kotlinx.datetime)
             implementation(libs.napier)
+            implementation(libs.bundles.coil)
             implementation(libs.kamel)
         }
 

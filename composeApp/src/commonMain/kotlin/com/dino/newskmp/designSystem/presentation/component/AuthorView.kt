@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import news_kmp.composeapp.generated.resources.Res
 import news_kmp.composeapp.generated.resources.follow_txt
 import news_kmp.composeapp.generated.resources.published_by_txt
-import news_kmp.composeapp.generated.resources.unknown_txt
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 
@@ -37,7 +36,7 @@ import org.jetbrains.compose.resources.stringResource
         verticalAlignment = Alignment.CenterVertically
     ) {
         RawrImage(
-            data = "https://avatar.iran.liara.run/public?username=${authorName}",
+            data = "https://avatar.iran.liara.run/public?username=${authorName.ifBlank {  }}",
             modifier = Modifier.size(36.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary)
         )
         Column(
@@ -49,7 +48,7 @@ import org.jetbrains.compose.resources.stringResource
                 color = MaterialTheme.colorScheme.secondary
             )
             Text(
-                text = authorName.ifEmpty { stringResource(Res.string.unknown_txt) },
+                text = authorName,
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,

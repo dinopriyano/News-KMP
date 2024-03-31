@@ -1,9 +1,7 @@
 package com.dino.newskmp.common.domain.model
 
 import com.dino.newskmp.common.data.remote.dto.NewsItemResponse
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-@OptIn(ExperimentalResourceApi::class)
 data class News(
     val publishedAt: String? = null,
     val author: String? = null,
@@ -15,7 +13,6 @@ data class News(
     val content: String? = null
 )
 
-@OptIn(ExperimentalResourceApi::class)
 fun NewsItemResponse.toDomain() = News(
     publishedAt,
     author,

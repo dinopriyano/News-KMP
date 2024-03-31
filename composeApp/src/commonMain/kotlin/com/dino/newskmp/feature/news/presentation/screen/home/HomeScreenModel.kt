@@ -40,6 +40,7 @@ class HomeScreenModel(
                             updateState {
                                 it.copy(
                                     isLoading = false,
+                                    isShouldScrollToFirstItem = true,
                                     news = result.data.articles.orEmpty()
                                 )
                             }
@@ -63,6 +64,12 @@ class HomeScreenModel(
     override fun onCategoryClick(category: String) {
         if (category.isNotEmpty()) {
             getNews(category)
+        }
+    }
+
+    override fun onScrollTFirstItem() {
+        updateState {
+            it.copy(isShouldScrollToFirstItem = false)
         }
     }
 

@@ -1,5 +1,5 @@
 [versions]
-agp = "8.2.0"
+agp = "8.2.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -20,8 +20,9 @@ ktor = "3.0.0-wasm2"
 kotlin-datetime = "0.6.0-RC.2"
 napier = "2.7.1"
 build-konfig = "0.15.1"
-coroutines = "1.8.1-Beta"
+coroutines = "1.8.0"
 kamel = "0.9.4-wasm"
+coil-compose = "3.0.0-alpha06"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -46,7 +47,7 @@ voyager-screen-model = { module = "cafe.adriel.voyager:voyager-screenmodel", ver
 
 # Koin
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 
 # Networking
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -62,6 +63,9 @@ ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin-datetime" }
 
 # Image loader
+coil-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil-compose" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil-compose" }
+coil-ktor-network = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil-compose" }
 kamel = { module = "media.kamel:kamel-image", version.ref = "kamel" }
 
 # Logging
@@ -92,3 +96,4 @@ networking = [
     "ktor-logging",
     "ktor-serialization-json"
 ]
+coil = ["coil-core", "coil-compose", "coil-ktor-network"]

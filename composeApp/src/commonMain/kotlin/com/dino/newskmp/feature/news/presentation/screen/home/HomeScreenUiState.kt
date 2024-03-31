@@ -10,5 +10,6 @@ data class HomeScreenUiState(
     val isLoading: Boolean = false,
     val showToast: Boolean = false,
     val newsError: Resource.Error? = null,
+    val isShouldScrollToFirstItem: Boolean = false,
     val news: List<News> = emptyList()
 )

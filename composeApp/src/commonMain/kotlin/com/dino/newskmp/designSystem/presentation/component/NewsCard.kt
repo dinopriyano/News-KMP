@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.dino.newskmp.common.domain.model.News
 import com.dino.newskmp.common.utils.formatToTimeAgo
 import news_kmp.composeapp.generated.resources.Res
+import news_kmp.composeapp.generated.resources.unknown_txt
 import news_kmp.composeapp.generated.resources.updated_at_txt
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
@@ -41,7 +42,7 @@ import org.jetbrains.compose.resources.stringResource
             modifier = Modifier.padding(top = 16.dp)
         )
         AuthorView(
-            authorName = news.author.orEmpty(),
+            authorName = news.author.orEmpty().ifEmpty { stringResource(Res.string.unknown_txt) },
             modifier = Modifier.padding(top = 16.dp).fillMaxWidth()
         )
         Text(
