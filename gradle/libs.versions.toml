@@ -21,7 +21,6 @@ kotlin-datetime = "0.6.0-RC.2"
 napier = "2.7.1"
 build-konfig = "0.15.1"
 coroutines = "1.8.0"
-kamel = "0.9.4-wasm"
 coil-compose = "3.0.0-alpha06"
 
 [libraries]
@@ -66,7 +65,6 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 coil-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil-compose" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil-compose" }
 coil-ktor-network = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil-compose" }
-kamel = { module = "media.kamel:kamel-image", version.ref = "kamel" }
 
 # Logging
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
