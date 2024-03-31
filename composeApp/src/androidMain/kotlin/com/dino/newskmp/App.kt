@@ -17,7 +17,7 @@ class App: Application() {
         super.onCreate()
 
         Napier.base(DebugAntilog())
-        initKoin(baseUrl = "", enableNetworkLogs = true) {
+        initKoin(enableNetworkLogs = true) {
             androidLogger()
             androidContext(this@App)
         }

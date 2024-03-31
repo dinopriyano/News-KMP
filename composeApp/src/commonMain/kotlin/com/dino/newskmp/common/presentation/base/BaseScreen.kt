@@ -55,6 +55,6 @@ abstract class BaseScreen<VM, S, E, I> : Screen
         noinline parameters: ParametersDefinition? = null,
     ): T {
         val koin = KoinPlatform.getKoin()
-        return rememberScreenModel(tag = qualifier?.value) { koin.get(qualifier, parameters) }
+        return rememberScreenModel<T>(tag = qualifier?.value) { koin.get(qualifier, parameters) }
     }
 }

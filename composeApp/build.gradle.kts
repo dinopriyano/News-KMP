@@ -1,7 +1,9 @@
-import com.codingfeline.buildkonfig.compiler.FieldSpec
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -62,13 +64,13 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
+            implementation(libs.coroutines.core)
             implementation(libs.bundles.voyager.navigaton)
             implementation(libs.bundles.koin)
             implementation(libs.bundles.networking)
             implementation(libs.kotlinx.datetime)
             implementation(libs.napier)
-            api(libs.coil.compose)
-            api(libs.coil.ktor.network)
+            implementation(libs.bundles.coil)
         }
 
         androidMain.dependencies {
@@ -76,7 +78,8 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.android)
-            implementation(libs.koin.compose)
+            implementation(libs.koin.android.compose)
+            implementation(libs.coroutines.android)
         }
 
         appleMain.dependencies {
@@ -86,20 +89,24 @@ kotlin {
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.client.cio)
-            implementation(libs.koin.compose)
+            implementation(libs.coroutines.swing)
         }
 
         wasmJsMain.dependencies {
             implementation(libs.ktor.client.js)
+            implementation(libs.coroutines.js)
         }
     }
 }
 
 buildkonfig {
-    packageName = "com.dino.newskmp"
-
+    packageName = "com.dino.newskmp.composeApp"
+    val localPropertiesFile = rootProject.file("local.properties")
+    val localProperties = Properties()
+    localProperties.load(FileInputStream(localPropertiesFile))
     defaultConfigs {
-        buildConfigField(FieldSpec.Type.STRING, "API_KEY", properties["API_KEY"].toString())
+        buildConfigField(STRING, "API_KEY", localProperties["API_KEY"].toString())
+        buildConfigField(STRING, "BASE_URL", localProperties["BASE_URL"].toString())
     }
 }
 

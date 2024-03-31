@@ -10,18 +10,19 @@ androidx-core-ktx = "1.12.0"
 androidx-espresso-core = "3.5.1"
 androidx-material = "1.11.0"
 androidx-test-junit = "1.1.5"
-compose = "1.6.2"
+compose = "1.6.4"
 compose-plugin = "1.6.0"
 junit = "4.13.2"
 kotlin = "1.9.22"
 voyager = "1.1.0-alpha03"
-koin = "3.6.0-alpha3"
-koin-multiplatform = "1.2.0-alpha3"
+koin = "3.6.0-wasm-alpha2"
 ktor = "3.0.0-wasm2"
 kotlin-datetime = "0.6.0-RC.2"
 coil-compose = "3.0.0-alpha06"
 napier = "2.7.1"
 build-konfig = "0.15.1"
+coroutines = "1.8.1-Beta"
+coroutines-wasm = "1.7.2-wasm3"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -46,8 +47,8 @@ voyager-screen-model = { module = "cafe.adriel.voyager:voyager-screenmodel", ver
 
 # Koin
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-koin-multiplatform = { module = "io.insert-koin:koin-compose", version.ref = "koin-multiplatform" }
-koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-android-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 
 # Networking
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -63,11 +64,20 @@ ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin-datetime" }
 
 # Image loader
-coil-compose = { module = "io.coil-kt.coil3:coil", version.ref = "coil-compose" }
+coil-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil-compose" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil-compose" }
 coil-ktor-network = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil-compose" }
 
 # Logging
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+
+# Coroutines
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-jvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "coroutines" }
+coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
+coroutines-js = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-wasm-js", version.ref = "coroutines-wasm" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -79,10 +89,11 @@ build-konfig = { id = "com.codingfeline.buildkonfig", version.ref = "build-konfi
 
 [bundles]
 voyager-navigaton = ["voyager-navigator", "voyager-tab-navigator", "voyager-transitions", "voyager-screen-model"]
-koin = ["koin-core", "koin-multiplatform"]
+koin = ["koin-core", "koin-compose"]
 networking = [
     "ktor-core",
     "content-negotiation",
     "ktor-logging",
     "ktor-serialization-json"
 ]
+coil = ["coil-core", "coil-compose", "coil-ktor-network"]

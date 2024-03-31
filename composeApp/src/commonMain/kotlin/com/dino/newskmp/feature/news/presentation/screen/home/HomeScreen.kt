@@ -23,12 +23,12 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -39,6 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.Navigator
+import com.dino.newskmp.common.domain.model.News
 import com.dino.newskmp.common.presentation.base.BaseScreen
 import com.dino.newskmp.common.utils.animateScaled
 import com.dino.newskmp.common.utils.carouselTransition
@@ -49,7 +50,6 @@ import com.dino.newskmp.designSystem.presentation.component.RawrMultiSelectionCh
 import com.dino.newskmp.designSystem.presentation.component.RawrMultiSelectionColor
 import com.dino.newskmp.designSystem.presentation.theme.DarkTransparent
 import com.dino.newskmp.designSystem.presentation.theme.IconPastel
-import com.dino.newskmp.feature.news.data.DummyData
 import news_kmp.composeapp.generated.resources.Res
 import news_kmp.composeapp.generated.resources.ic_bookmark_outlined
 import news_kmp.composeapp.generated.resources.ic_kmp_news_light
@@ -71,6 +71,9 @@ class HomeScreen : BaseScreen<HomeScreenModel, HomeScreenUiState, HomeScreenUiEf
     @Composable
     override fun onRender(state: HomeScreenUiState, listener: HomeScreenInteractionListener) {
         var selectedCategoryIndex by rememberSaveable { mutableStateOf(0) }
+        val categories = listOf(
+            "Trending", "Business", "Entertainment", "General", "Health", "Science", "Sports", "Technology"
+        )
 
         Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             // Home header
@@ -79,15 +82,18 @@ class HomeScreen : BaseScreen<HomeScreenModel, HomeScreenUiState, HomeScreenUiEf
             // Category
             NewsCategories(
                 selectedCategoryIndex,
-                DummyData.categories,
+                categories,
                 Modifier.padding(top = 16.dp),
             ) { title, index ->
                 selectedCategoryIndex = index
-                // TODO: API call here
+                listener.onCategoryClick(title)
             }
 
             // Slider content
-            NewsSlider(modifier = Modifier.fillMaxSize().padding(bottom = (56.dp + 5.dp + 24.dp)))
+            NewsSlider(
+                newsList = state.news,
+                modifier = Modifier.fillMaxSize().padding(bottom = (56.dp + 5.dp + 24.dp))
+            )
         }
     }
 
@@ -157,20 +163,26 @@ fun NewsCategories(
 @OptIn(ExperimentalFoundationApi::class, ExperimentalResourceApi::class)
 @Composable
 fun NewsSlider(
+    newsList: List<News>,
     modifier: Modifier
 ) {
     val pagerState = rememberPagerState(
         pageCount = {
-            DummyData.newsList.size
+            newsList.size
         }
     )
+
+    LaunchedEffect(newsList) {
+        pagerState.animateScrollToPage(0)
+    }
+
     HorizontalPager(
         state = pagerState,
         modifier = modifier,
         contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp)
     ) { page ->
-        val newsList = DummyData.newsList.getOrNull(page)
-        newsList?.let { news ->
+        val currentNews = newsList.getOrNull(page)
+        currentNews?.let { news ->
             Card(
                 modifier = Modifier
                     .noRippleClickable {

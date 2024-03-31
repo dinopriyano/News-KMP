@@ -11,9 +11,14 @@ import com.dino.newskmp.designSystem.presentation.theme.YellowPastel
 import com.dino.newskmp.platform.DateTime
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import news_kmp.composeapp.generated.resources.*
 import news_kmp.composeapp.generated.resources.Res
 import news_kmp.composeapp.generated.resources.just_now_txt
+import news_kmp.composeapp.generated.resources.x_day_ago_one
+import news_kmp.composeapp.generated.resources.x_day_ago_other
+import news_kmp.composeapp.generated.resources.x_hour_ago_one
+import news_kmp.composeapp.generated.resources.x_hour_ago_other
+import news_kmp.composeapp.generated.resources.x_minute_ago_one
+import news_kmp.composeapp.generated.resources.x_minute_ago_other
 import news_kmp.composeapp.generated.resources.x_week_ago_one
 import news_kmp.composeapp.generated.resources.x_week_ago_other
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -48,11 +53,11 @@ fun formatToTimeAgo(isoDate: String): String {
     val months = days / 30
 
     return when {
-        months > 0 -> dateTime.getFormattedDate(isoDate, "dd MM yyyy")
-        weeks > 0 -> getPulralStringValue(weeks, Res.string.x_week_ago_one, Res.string.x_week_ago_other)
-        days > 0 -> getPulralStringValue(days, Res.string.x_day_ago_one, Res.string.x_day_ago_other)
-        hours > 0 -> getPulralStringValue(hours, Res.string.x_hour_ago_one, Res.string.x_hour_ago_other)
-        minutes > 0 -> getPulralStringValue(minutes, Res.string.x_minute_ago_one, Res.string.x_minute_ago_other)
+        months > 0 -> dateTime.getFormattedDate(isoDate, "dd-MM-yyyy")
+        weeks > 0 -> getPluralStringValue(weeks, Res.string.x_week_ago_one, Res.string.x_week_ago_other)
+        days > 0 -> getPluralStringValue(days, Res.string.x_day_ago_one, Res.string.x_day_ago_other)
+        hours > 0 -> getPluralStringValue(hours, Res.string.x_hour_ago_one, Res.string.x_hour_ago_other)
+        minutes > 0 -> getPluralStringValue(minutes, Res.string.x_minute_ago_one, Res.string.x_minute_ago_other)
         else -> stringResource(Res.string.just_now_txt)
     }
 }

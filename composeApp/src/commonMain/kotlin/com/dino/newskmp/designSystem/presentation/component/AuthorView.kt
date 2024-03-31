@@ -1,6 +1,5 @@
 package com.dino.newskmp.designSystem.presentation.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,13 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import news_kmp.composeapp.generated.resources.Res
 import news_kmp.composeapp.generated.resources.follow_txt
 import news_kmp.composeapp.generated.resources.published_by_txt
+import news_kmp.composeapp.generated.resources.unknown_txt
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 
@@ -32,18 +30,15 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalResourceApi::class)
 @Composable fun AuthorView(
     authorName: String,
-    avatar: Painter,
     modifier: Modifier
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            modifier = Modifier.size(36.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary),
-            contentScale = ContentScale.Crop,
-            painter = avatar,
-            contentDescription = null
+        RawrImage(
+            data = "https://i.pravatar.cc/150?u=${authorName}",
+            modifier = Modifier.size(36.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary)
         )
         Column(
             modifier = Modifier.weight(1f).padding(horizontal = 8.dp)
@@ -54,7 +49,7 @@ import org.jetbrains.compose.resources.stringResource
                 color = MaterialTheme.colorScheme.secondary
             )
             Text(
-                text = authorName,
+                text = authorName.ifEmpty { stringResource(Res.string.unknown_txt) },
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
                 maxLines = 1,

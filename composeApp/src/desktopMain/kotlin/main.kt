@@ -7,7 +7,7 @@ import io.github.aakira.napier.Napier
 fun main() = application {
     Window(onCloseRequest = ::exitApplication, title = "News-KMP") {
         Napier.base(DebugAntilog())
-        initKoin("")
+        initKoin()
         App()
     }
 }

@@ -20,11 +20,11 @@ fun Any?.isNull() = this == null
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun getPulralStringValue(quantity: Long, resourceOne: StringResource, resourceOther: StringResource? = null): String {
+fun getPluralStringValue(quantity: Long, resourceOne: StringResource, resourceOther: StringResource? = null): String {
     return if (resourceOther.isNull() || quantity < 2 ) {
-        stringResource(resourceOne, quantity)
+        stringResource(resourceOne).replace("%s", quantity.toString())
     } else {
-        stringResource(resourceOther!!, quantity)
+        stringResource(resourceOther!!).replace("%s", quantity.toString())
     }
 }
 

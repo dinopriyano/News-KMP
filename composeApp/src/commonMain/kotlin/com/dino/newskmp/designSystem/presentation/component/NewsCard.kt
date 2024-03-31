@@ -4,19 +4,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ScrollableTabRow
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.dino.newskmp.common.domain.model.News
 import com.dino.newskmp.common.utils.formatToTimeAgo
-import com.dino.newskmp.feature.news.data.DummyData
-import com.dino.newskmp.feature.news.domain.model.News
 import news_kmp.composeapp.generated.resources.Res
-import news_kmp.composeapp.generated.resources.updated_txt
-import org.jetbrains.compose.resources.painterResource
+import news_kmp.composeapp.generated.resources.updated_at_txt
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 
@@ -39,14 +35,13 @@ import org.jetbrains.compose.resources.stringResource
             overflow = TextOverflow.Ellipsis
         )
         Text(
-            text = "${stringResource(Res.string.updated_txt)} ${formatToTimeAgo(news.publishedAt.orEmpty())}",
+            text = "${stringResource(Res.string.updated_at_txt)} ${formatToTimeAgo(news.publishedAt.orEmpty())}",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.padding(top = 16.dp)
         )
         AuthorView(
             authorName = news.author.orEmpty(),
-            avatar = painterResource(DummyData.getRandomAvatar()),
             modifier = Modifier.padding(top = 16.dp).fillMaxWidth()
         )
         Text(

@@ -8,7 +8,7 @@ import io.github.aakira.napier.Napier
 fun main() {
     CanvasBasedWindow(canvasElementId = "ComposeTarget") {
         Napier.base(DebugAntilog())
-        initKoin("")
+        initKoin()
         App()
     }
 }

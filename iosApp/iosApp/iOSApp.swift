@@ -6,7 +6,7 @@ import ComposeApp
 struct iOSApp: App {
 
 	init() {
-		KoinKt.doInitKoin(baseUrl: "test")
+		KoinKt.doInitKoin()
 		NapierHelperKt.debugBuild()
 	}
 
