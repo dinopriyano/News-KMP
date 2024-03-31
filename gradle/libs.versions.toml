@@ -47,8 +47,7 @@ voyager-screen-model = { module = "cafe.adriel.voyager:voyager-screenmodel", ver
 
 # Koin
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
-koin-android-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 
 # Networking
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -89,7 +88,7 @@ build-konfig = { id = "com.codingfeline.buildkonfig", version.ref = "build-konfi
 
 [bundles]
 voyager-navigaton = ["voyager-navigator", "voyager-tab-navigator", "voyager-transitions", "voyager-screen-model"]
-koin = ["koin-core", "koin-compose"]
+koin = ["koin-core"]
 networking = [
     "ktor-core",
     "content-negotiation",
