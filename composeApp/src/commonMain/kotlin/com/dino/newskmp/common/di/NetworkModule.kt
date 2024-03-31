@@ -8,6 +8,7 @@ import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.UserAgent
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
@@ -45,6 +46,8 @@ fun createHttpClient(httpClientEngine: HttpClientEngine, json: Json, enableNetwo
         install(HttpCallValidator) {
             handleResponseExceptionWithRequest { cause, _ -> Napier.e("exception $cause") }
         }
+
+        install(UserAgent)
 
         install(ContentNegotiation) { json(json) }
         if (enableNetworkLogs) {

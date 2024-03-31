@@ -22,7 +22,7 @@ coil-compose = "3.0.0-alpha06"
 napier = "2.7.1"
 build-konfig = "0.15.1"
 coroutines = "1.8.1-Beta"
-coroutines-wasm = "1.7.2-wasm3"
+kamel = "0.9.4-wasm"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -63,9 +63,7 @@ ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin-datetime" }
 
 # Image loader
-coil-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil-compose" }
-coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil-compose" }
-coil-ktor-network = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil-compose" }
+kamel = { module = "media.kamel:kamel-image", version.ref = "kamel" }
 
 # Logging
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
@@ -75,7 +73,7 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-jvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "coroutines" }
 coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
-coroutines-js = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-wasm-js", version.ref = "coroutines-wasm" }
+coroutines-js = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-wasm-js", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 
 [plugins]
@@ -95,4 +93,3 @@ networking = [
     "ktor-logging",
     "ktor-serialization-json"
 ]
-coil = ["coil-core", "coil-compose", "coil-ktor-network"]

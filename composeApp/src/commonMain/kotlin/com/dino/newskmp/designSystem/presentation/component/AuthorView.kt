@@ -37,7 +37,7 @@ import org.jetbrains.compose.resources.stringResource
         verticalAlignment = Alignment.CenterVertically
     ) {
         RawrImage(
-            data = "https://i.pravatar.cc/150?u=${authorName}",
+            data = "https://avatar.iran.liara.run/public?username=${authorName}",
             modifier = Modifier.size(36.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary)
         )
         Column(
