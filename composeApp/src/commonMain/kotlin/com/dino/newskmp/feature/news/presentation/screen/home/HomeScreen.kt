@@ -2,12 +2,14 @@ package com.dino.newskmp.feature.news.presentation.screen.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,13 +26,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -64,6 +66,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import news_kmp.composeapp.generated.resources.Res
 import news_kmp.composeapp.generated.resources.ic_kmp_news_light
+import news_kmp.composeapp.generated.resources.ic_menu
 import news_kmp.composeapp.generated.resources.title
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -93,7 +96,9 @@ class HomeScreen : BaseScreen<HomeScreenModel, HomeScreenUiState, HomeScreenUiEf
 
         Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             // Home header
-            NewsHeader(Modifier.fillMaxWidth())
+            NewsHeader(Modifier.fillMaxWidth()) {
+                // TODO: on menu action click
+            }
 
             // Category
             NewsCategories(
@@ -142,9 +147,10 @@ class HomeScreen : BaseScreen<HomeScreenModel, HomeScreenUiState, HomeScreenUiEf
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
 fun NewsHeader(
-    modifier: Modifier
+    modifier: Modifier,
+    onMenuActionClick: () -> Unit
 ) {
-    CenterAlignedTopAppBar(
+    TopAppBar(
         modifier = modifier,
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.background
@@ -155,18 +161,32 @@ fun NewsHeader(
             ) {
                 Icon(
                     painter = painterResource(Res.drawable.ic_kmp_news_light),
-                    modifier = Modifier.size(42.dp),
+                    modifier = Modifier.size(36.dp).clickable {
+                        onMenuActionClick()
+                    },
                     tint = Color.Unspecified,
                     contentDescription = null
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
                     text = stringResource(Res.string.title),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onBackground
                 )
             }
-        }
+        },
+        actions = {
+            Icon(
+                painterResource(Res.drawable.ic_menu),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp).animateScaled(),
+                tint = MaterialTheme.colorScheme.onBackground
+            )
+        },
+        windowInsets = WindowInsets(
+            left = 8.dp,
+            right = 24.dp
+        )
     )
 }
 

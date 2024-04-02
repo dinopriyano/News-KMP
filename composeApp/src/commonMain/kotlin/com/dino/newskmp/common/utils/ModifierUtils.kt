@@ -43,7 +43,7 @@ import kotlin.math.absoluteValue
 
         // Scale item
         scaleY = MathUtils.lerp(
-            start = 0.9f,
+            start = 0.94f,
             stop = 1f,
             fraction = 1f - absPageOffset.coerceIn(0f, 1f)
         )
