@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -152,18 +151,17 @@ fun NewsHeader(
 ) {
     TopAppBar(
         modifier = modifier,
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.background
         ),
         title = {
             Row (
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Spacer(Modifier.width(8.dp))
                 Icon(
                     painter = painterResource(Res.drawable.ic_kmp_news_light),
-                    modifier = Modifier.size(36.dp).clickable {
-                        onMenuActionClick()
-                    },
+                    modifier = Modifier.size(36.dp),
                     tint = Color.Unspecified,
                     contentDescription = null
                 )
@@ -179,14 +177,13 @@ fun NewsHeader(
             Icon(
                 painterResource(Res.drawable.ic_menu),
                 contentDescription = null,
-                modifier = Modifier.size(24.dp).animateScaled(),
+                modifier = Modifier.size(24.dp).clickable {
+                    onMenuActionClick()
+                }.animateScaled(),
                 tint = MaterialTheme.colorScheme.onBackground
             )
-        },
-        windowInsets = WindowInsets(
-            left = 8.dp,
-            right = 24.dp
-        )
+            Spacer(Modifier.width(24.dp))
+        }
     )
 }
 
