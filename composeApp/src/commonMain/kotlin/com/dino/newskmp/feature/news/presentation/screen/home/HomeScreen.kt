@@ -3,6 +3,7 @@ package com.dino.newskmp.feature.news.presentation.screen.home
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,9 +38,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.Navigator
@@ -52,8 +56,12 @@ import com.dino.newskmp.common.utils.noRippleClickable
 import com.dino.newskmp.designSystem.presentation.component.NewsShortcut
 import com.dino.newskmp.designSystem.presentation.component.RawrMultiSelectionChip
 import com.dino.newskmp.designSystem.presentation.component.RawrMultiSelectionColor
+import com.dino.newskmp.designSystem.presentation.component.RawrProgressIndicator
 import com.dino.newskmp.designSystem.presentation.theme.DarkTransparent
 import com.dino.newskmp.designSystem.presentation.theme.IconPastel
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import news_kmp.composeapp.generated.resources.Res
 import news_kmp.composeapp.generated.resources.ic_kmp_news_light
 import news_kmp.composeapp.generated.resources.title
@@ -69,12 +77,19 @@ class HomeScreen : BaseScreen<HomeScreenModel, HomeScreenUiState, HomeScreenUiEf
         initScreen(getScreenModel())
     }
 
+    @OptIn(FlowPreview::class)
     @Composable
     override fun onRender(state: HomeScreenUiState, listener: HomeScreenInteractionListener) {
         var selectedCategoryIndex by rememberSaveable { mutableStateOf(0) }
-        val categories = listOf(
-            "Trending", "Business", "Entertainment", "Health", "Science", "Sports", "Technology"
-        )
+
+        LaunchedEffect(selectedCategoryIndex) {
+            snapshotFlow { selectedCategoryIndex }
+                .distinctUntilChanged()
+                .debounce(1000)
+                .collect {
+                    listener.onSelectedCategoryChanged(it)
+                }
+        }
 
         Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             // Home header
@@ -83,20 +98,37 @@ class HomeScreen : BaseScreen<HomeScreenModel, HomeScreenUiState, HomeScreenUiEf
             // Category
             NewsCategories(
                 selectedCategoryIndex,
-                categories,
+                !state.isLoading,
+                state.newsCategories,
                 Modifier.padding(top = 16.dp),
-            ) { title, index ->
+            ) { _, index ->
                 selectedCategoryIndex = index
-                listener.onCategoryClick(title)
             }
 
             // Slider content
-            NewsSlider(
-                newsList = state.news,
+            Box (
                 modifier = Modifier.fillMaxSize(),
-                isShouldScrollToFirstItem = state.isShouldScrollToFirstItem,
-                onScrollToFirstItem = listener::onScrollTFirstItem
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                NewsSlider(
+                    newsList = state.news,
+                    modifier = Modifier.fillMaxSize(),
+                    isShouldScrollToFirstItem = state.isShouldScrollToFirstItem,
+                    onScrollToFirstItem = listener::onScrollTFirstItem
+                )
+
+                if (state.isLoading) {
+                    RawrProgressIndicator(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .shadow(20.dp)
+                            .background(
+                                MaterialTheme.colorScheme.onBackground,
+                                RoundedCornerShape(16.dp)
+                            )
+                    )
+                }
+            }
         }
     }
 
@@ -141,6 +173,7 @@ fun NewsHeader(
 @Composable
 fun NewsCategories(
     selectedIndex: Int,
+    isSelectable: Boolean,
     categories: List<String>,
     modifier: Modifier,
     onSelected: (String, Int) -> Unit
@@ -155,7 +188,9 @@ fun NewsCategories(
             indicatorColor = MaterialTheme.colorScheme.onBackground
         ),
         onOptionSelected = { title, index ->
-            onSelected(title, index)
+            if (isSelectable) {
+                onSelected(title, index)
+            }
         },
         horizontalContentPadding = 24.dp,
         modifier = modifier,

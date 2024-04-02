@@ -20,8 +20,20 @@ class HomeScreenModel(
 
     override val viewModelScope: CoroutineScope = screenModelScope
 
+    private val newsCategories = listOf(
+        "Trending", "Business", "Entertainment", "Health", "Science", "Sports", "Technology"
+    )
+    private var selectedCategory = newsCategories[0]
+
     init {
-        getNews("Trending")
+        getNews(selectedCategory)
+        getNewsCategories()
+    }
+
+    private fun getNewsCategories() {
+        updateState {
+            it.copy(newsCategories = newsCategories)
+        }
     }
 
     private fun getNews(category: String) {
@@ -61,9 +73,11 @@ class HomeScreenModel(
         }
     }
 
-    override fun onCategoryClick(category: String) {
-        if (category.isNotEmpty()) {
-            getNews(category)
+    override fun onSelectedCategoryChanged(categoryIndex: Int) {
+        val newSelectedCategory = newsCategories[categoryIndex]
+        if (newSelectedCategory != selectedCategory) {
+            selectedCategory = newSelectedCategory
+            getNews(newSelectedCategory)
         }
     }
 
