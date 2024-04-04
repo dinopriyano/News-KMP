@@ -60,6 +60,7 @@ import com.dino.newskmp.designSystem.presentation.component.RawrMultiSelectionCo
 import com.dino.newskmp.designSystem.presentation.component.RawrProgressIndicator
 import com.dino.newskmp.designSystem.presentation.theme.DarkTransparent
 import com.dino.newskmp.designSystem.presentation.theme.IconPastel
+import com.dino.newskmp.feature.interest.presentation.screen.manage_interest.ManageInterestScreen
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -73,6 +74,14 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 class HomeScreen : BaseScreen<HomeScreenModel, HomeScreenUiState, HomeScreenUiEffect, HomeScreenInteractionListener>() {
+
+    override fun onEffect(effect: HomeScreenUiEffect, navigator: Navigator) {
+        when (effect) {
+            is HomeScreenUiEffect.NavigateToManageInterest -> {
+                navigator.parent?.push(ManageInterestScreen())
+            }
+        }
+    }
 
     @Composable
     override fun Content() {
@@ -96,7 +105,7 @@ class HomeScreen : BaseScreen<HomeScreenModel, HomeScreenUiState, HomeScreenUiEf
         Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             // Home header
             NewsHeader(Modifier.fillMaxWidth()) {
-                // TODO: on menu action click
+                listener.onActionMenuClick()
             }
 
             // Category
@@ -135,11 +144,6 @@ class HomeScreen : BaseScreen<HomeScreenModel, HomeScreenUiState, HomeScreenUiEf
             }
         }
     }
-
-    override fun onEffect(effect: HomeScreenUiEffect, navigator: Navigator) {
-        // TODO: Not yet implemented
-    }
-
 }
 
 

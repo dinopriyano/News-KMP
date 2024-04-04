@@ -12,8 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.NavigatorDisposeBehavior
 import cafe.adriel.voyager.navigator.tab.CurrentTab
+import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import cafe.adriel.voyager.transitions.SlideTransition
 import com.dino.newskmp.common.utils.isLargeScreen
 import com.dino.newskmp.designSystem.presentation.component.RawrBottomNavigationBar
 import com.dino.newskmp.designSystem.presentation.component.RawrNavigationRail
@@ -33,7 +37,6 @@ import news_kmp.composeapp.generated.resources.ic_search_outlined
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 @Preview
 fun App() {
@@ -42,17 +45,28 @@ fun App() {
             statusBarColor = MaterialTheme.colorScheme.background,
             navigationBarColor = MaterialTheme.colorScheme.background
         )
-        Application().Content()
+        NewsKmpApp()
     }
 }
 
-class Application: Screen {
-    
+@Composable
+fun NewsKmpApp() {
+    Navigator(
+        screen = TopLevelScreen(),
+        disposeBehavior = NavigatorDisposeBehavior(disposeNestedNavigators = false, disposeSteps = true)
+    ) {
+        SlideTransition(it)
+    }
+}
+
+class TopLevelScreen: Screen {
+
     @Composable
     override fun Content() {
-       val tabs = rememberTabs()
-
         TabNavigator(HomeTab) {
+            val tabNavigator = LocalTabNavigator.current
+            val tabs = rememberTabs()
+
             Row (
                 modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
             ) {
@@ -73,8 +87,9 @@ class Application: Screen {
                     }
                     AnimatedVisibility(visible = !isLargeScreen()) {
                         RawrBottomNavigationBar(
-                            tabs,
-                            modifier = Modifier.padding(bottom = 24.dp)
+                            tabs = tabs,
+                            modifier = Modifier.padding(bottom = 24.dp),
+                            tabNavigator = tabNavigator
                         )
                     }
                 }

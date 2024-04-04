@@ -5,4 +5,6 @@ package com.dino.newskmp.feature.news.presentation.screen.home
  */
 sealed class HomeScreenUiEffect {
 
+    data object NavigateToManageInterest: HomeScreenUiEffect()
+
 }

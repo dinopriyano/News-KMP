@@ -35,6 +35,8 @@ abstract class BaseScreen<VM, S, E, I> : Screen
         }
     }
 
+    abstract fun onEffect(effect: E, navigator: Navigator)
+
     @Composable
     abstract fun onRender(state: S, listener: I)
 
@@ -46,8 +48,6 @@ abstract class BaseScreen<VM, S, E, I> : Screen
             }
         }
     }
-
-    abstract fun onEffect(effect: E, navigator: Navigator)
 
     @Composable
     inline fun <reified T : ScreenModel> getScreenModel(

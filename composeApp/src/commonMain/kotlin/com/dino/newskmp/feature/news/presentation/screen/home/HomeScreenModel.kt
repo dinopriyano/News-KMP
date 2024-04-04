@@ -87,4 +87,7 @@ class HomeScreenModel(
         }
     }
 
+    override fun onActionMenuClick() {
+        sendNewEffect(HomeScreenUiEffect.NavigateToManageInterest)
+    }
 }
