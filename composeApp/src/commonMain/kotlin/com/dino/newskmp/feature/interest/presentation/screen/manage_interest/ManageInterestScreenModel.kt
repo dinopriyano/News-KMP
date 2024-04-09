@@ -15,4 +15,8 @@ class ManageInterestScreenModel(
 
     override val viewModelScope: CoroutineScope = screenModelScope
 
+    override fun onBackButtonClick() {
+        sendNewEffect(ManageInterestScreenUiEffect.NavigateBack)
+    }
+
 }

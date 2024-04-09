@@ -9,6 +9,8 @@
     <string name="general_error_msg">Ups, something error</string>
     <string name="no_internet_error_msg">Ups, something error with your internet connection</string>
     <string name="unknown_txt">Unknown</string>
+    <string name="select_interest_txt">Select Interests</string>
+    <string name="submit_txt">Submit</string>
 
     <!-- comopse resource doesn't yet support plural -->
     <string name="x_minute_ago_one">%s minute ago</string>

@@ -9,6 +9,8 @@
     <string name="general_error_msg">Ups, ada sesuatu yang salah</string>
     <string name="no_internet_error_msg">Ups, ada sesuatu yang salah dengan koneksi internet Anda</string>
     <string name="unknown_txt">Tidak diketahui</string>
+    <string name="select_interest_txt">Pilih Minat</string>
+    <string name="submit_txt">Simpan</string>
 
     <!-- comopse resource doesn't yet support plural -->
     <string name="x_minute_ago_one">%d menit yang lalu</string>

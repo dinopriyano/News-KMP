@@ -26,7 +26,6 @@ import com.dino.newskmp.designSystem.presentation.theme.NewsKMPTheme
 import com.dino.newskmp.feature.main.presentation.tab.FavoriteTab
 import com.dino.newskmp.feature.main.presentation.tab.HomeTab
 import com.dino.newskmp.feature.main.presentation.tab.SearchTab
-import com.dino.newskmp.platform.SystemBarColor
 import news_kmp.composeapp.generated.resources.Res
 import news_kmp.composeapp.generated.resources.ic_bookmark_filled
 import news_kmp.composeapp.generated.resources.ic_bookmark_outlined
@@ -41,10 +40,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App() {
     NewsKMPTheme {
-        SystemBarColor(
-            statusBarColor = MaterialTheme.colorScheme.background,
-            navigationBarColor = MaterialTheme.colorScheme.background
-        )
         NewsKmpApp()
     }
 }

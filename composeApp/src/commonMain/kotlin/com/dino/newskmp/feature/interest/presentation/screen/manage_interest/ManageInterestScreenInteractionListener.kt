@@ -6,4 +6,5 @@ import com.dino.newskmp.common.presentation.base.BaseInteractionListener
  * Created by dinopriyano on 04/04/24.
  */
 interface ManageInterestScreenInteractionListener : BaseInteractionListener {
+    fun onBackButtonClick()
 }

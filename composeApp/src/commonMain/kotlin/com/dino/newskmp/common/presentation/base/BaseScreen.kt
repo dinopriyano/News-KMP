@@ -1,5 +1,6 @@
 package com.dino.newskmp.common.presentation.base
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -10,6 +11,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.dino.newskmp.platform.SystemBarColor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.core.parameter.ParametersDefinition
@@ -29,6 +31,7 @@ abstract class BaseScreen<VM, S, E, I> : Screen
         val state: S by viewModel.state.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
 
+        setSystemBarColor()
         onRender(state, viewModel)
         Listen(viewModel.effect) {
             onEffect(effect = it, navigator = navigator)
@@ -56,5 +59,13 @@ abstract class BaseScreen<VM, S, E, I> : Screen
     ): T {
         val koin = KoinPlatform.getKoin()
         return rememberScreenModel<T>(tag = qualifier?.value) { koin.get(qualifier, parameters) }
+    }
+
+    @Composable
+    open fun setSystemBarColor() {
+        SystemBarColor(
+            statusBarColor = MaterialTheme.colorScheme.background,
+            navigationBarColor = MaterialTheme.colorScheme.background
+        )
     }
 }
